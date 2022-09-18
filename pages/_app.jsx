@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import TinaProvider from '../.tina/components/TinaDynamicProvider';
 
 function App({ Component, pageProps }) {

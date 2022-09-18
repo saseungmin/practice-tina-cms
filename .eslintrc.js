@@ -106,5 +106,6 @@ module.exports = {
     'jsx-a11y/anchor-is-valid': ['error', {
       aspects: ['invalidHref'],
     }],
+    'react/prop-types': 'off',
   },
 };

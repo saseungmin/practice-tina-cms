@@ -1,7 +1,9 @@
+import React, { PropsWithChildren } from 'react';
+
 import Head from 'next/head';
 import Link from 'next/link';
 
-function Layout({ children }) {
+function Layout({ children }: PropsWithChildren<unknown>) {
   return (
     <div
       style={{

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useTina } from 'tinacms/dist/edit-state';
 
 import { client } from '../../.tina/__generated__/client';
-import { Layout } from '../../components/Layout';
+import Layout from '../../components/Layout';
 
 function PostList({ query, variables, data }) {
   // data passes though in production mode and data is updated to the sidebar data in edit-mode
