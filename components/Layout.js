@@ -1,7 +1,7 @@
-import Link from 'next/link'
-import Head from 'next/head'
+import Head from 'next/head';
+import Link from 'next/link';
 
-export const Layout = (props) => {
+function Layout({ children }) {
   return (
     <div
       style={{
@@ -22,7 +22,9 @@ export const Layout = (props) => {
           <a>Posts</a>
         </Link>
       </header>
-      <main>{props.children}</main>
+      <main>{children}</main>
     </div>
-  )
+  );
 }
+
+export default Layout;

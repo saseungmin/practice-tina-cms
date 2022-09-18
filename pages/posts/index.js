@@ -1,16 +1,19 @@
-import { Layout } from "../../components/Layout";
-import Link from "next/link";
-import { useTina } from "tinacms/dist/edit-state";
-import { client } from "../../.tina/__generated__/client";
+import Link from 'next/link';
+import { useTina } from 'tinacms/dist/edit-state';
 
-export default function PostList(props) {
+import { client } from '../../.tina/__generated__/client';
+import { Layout } from '../../components/Layout';
+
+function PostList({ query, variables, data }) {
   // data passes though in production mode and data is updated to the sidebar data in edit-mode
-  const { data } = useTina({
-    query: props.query,
-    variables: props.variables,
-    data: props.data,
+  const { data: posts } = useTina({
+    query,
+    variables,
+    data,
   });
-  const postsList = data.postConnection.edges;
+
+  const postsList = posts.postConnection.edges;
+
   return (
     <Layout>
       <h1>Posts</h1>
@@ -27,6 +30,8 @@ export default function PostList(props) {
   );
 }
 
+export default PostList;
+
 export const getStaticProps = async () => {
   const { data, query, variables } = await client.queries.postConnection();
 
@@ -35,7 +40,7 @@ export const getStaticProps = async () => {
       data,
       query,
       variables,
-      //myOtherProp: 'some-other-data',
+      // myOtherProp: 'some-other-data',
     },
   };
 };

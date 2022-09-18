@@ -1,17 +1,19 @@
-import { TinaMarkdown } from "tinacms/dist/rich-text";
-import { Layout } from "../components/Layout";
-import { useTina } from "tinacms/dist/edit-state";
-import { client } from "../.tina/__generated__/client";
+import { useTina } from 'tinacms/dist/edit-state';
+import { TinaMarkdown } from 'tinacms/dist/rich-text';
 
-export default function Home(props) {
+import { client } from '../.tina/__generated__/client';
+import { Layout } from '../components/Layout';
+
+function Home({ query, variables, data }) {
   // data passes though in production mode and data is updated to the sidebar data in edit-mode
-  const { data } = useTina({
-    query: props.query,
-    variables: props.variables,
-    data: props.data,
+  const { data: postContent } = useTina({
+    query,
+    variables,
+    data,
   });
 
-  const content = data.page.body;
+  const content = postContent.page.body;
+
   return (
     <Layout>
       <TinaMarkdown content={content} />
@@ -19,9 +21,11 @@ export default function Home(props) {
   );
 }
 
+export default Home;
+
 export const getStaticProps = async () => {
   const { data, query, variables } = await client.queries.page({
-    relativePath: "home.mdx",
+    relativePath: 'home.mdx',
   });
 
   return {
@@ -29,7 +33,7 @@ export const getStaticProps = async () => {
       data,
       query,
       variables,
-      //myOtherProp: 'some-other-data',
+      // myOtherProp: 'some-other-data',
     },
   };
 };

@@ -1,13 +1,14 @@
-import { Layout } from "../../components/Layout";
-import { useTina } from "tinacms/dist/edit-state";
-import { client } from "../../.tina/__generated__/client";
+import { useTina } from 'tinacms/dist/edit-state';
 
-export default function Home(props) {
+import { client } from '../../.tina/__generated__/client';
+import { Layout } from '../../components/Layout';
+
+function Home({ query, variables, data }) {
   // data passes though in production mode and data is updated to the sidebar data in edit-mode
-  const { data } = useTina({
-    query: props.query,
-    variables: props.variables,
-    data: props.data,
+  const { data: post } = useTina({
+    query,
+    variables,
+    data,
   });
 
   return (
@@ -15,31 +16,35 @@ export default function Home(props) {
       <code>
         <pre
           style={{
-            backgroundColor: "lightgray",
+            backgroundColor: 'lightgray',
           }}
         >
-          {JSON.stringify(data.post, null, 2)}
+          {JSON.stringify(post.post, null, 2)}
         </pre>
       </code>
     </Layout>
   );
 }
 
+export default Home;
+
 export const getStaticPaths = async () => {
   const { data } = await client.queries.postConnection();
-  const paths = data.postConnection.edges.map((x) => {
-    return { params: { slug: x.node._sys.filename } };
-  });
+  const paths = data.postConnection.edges.map((x) => ({
+    params: {
+      slug: x.node._sys.filename,
+    },
+  }));
 
   return {
     paths,
-    fallback: "blocking",
+    fallback: 'blocking',
   };
 };
 
 export const getStaticProps = async (ctx) => {
   const { data, query, variables } = await client.queries.post({
-    relativePath: ctx.params.slug + ".md",
+    relativePath: `${ctx.params.slug}.md`,
   });
 
   return {
